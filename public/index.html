@@ -1,0 +1,34 @@
+<!-- public/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guessing Game</title>
+</head>
+<body>
+    <h1>Multiplayer Guessing Game</h1>
+    <div id="messages"></div>
+    <input id="guessInput" type="number" placeholder="Enter your guess">
+    <button id="guessButton">Guess</button>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const guessInput = document.getElementById('guessInput');
+        const guessButton = document.getElementById('guessButton');
+        const messagesDiv = document.getElementById('messages');
+
+        socket.on('message', (message) => {
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message;
+            messagesDiv.appendChild(messageElement);
+        });
+
+        guessButton.addEventListener('click', () => {
+            const guess = guessInput.value;
+            socket.emit('guess', guess);
+        });
+    </script>
+</body>
+</html>
