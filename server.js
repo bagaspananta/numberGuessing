@@ -7,6 +7,7 @@ const socketIO = require('socket.io');
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
+const port = process.env.PORT || 3000;
 
 let randomNumber = Math.floor(Math.random() * 100) + 1;
 let players = [];
@@ -39,6 +40,6 @@ io.on('connection', (socket) => {
     });
 });
 
-server.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
+server.listen(port, () => {
+    console.log('Server is running on http://localhost:${port}');
 });
